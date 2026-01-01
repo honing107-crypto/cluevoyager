@@ -29,7 +29,8 @@
     <p><strong>維港浮屍案 - 線索#1</strong></p>
     <ol>
       <li>點擊「啟動AR偵探模式」</li>
-      <li>走到戶外（最好有明顯特徵，如樓梯/柱子）</li>
+      <li>用另一台手機/電腦顯示這個圖片：https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png</li>
+      <li>用本手機相機對準 hiro 標記</li>
       <li>慢慢轉動手機，找到紅色方塊</li>
       <li>點擊「收集線索」</li>
     </ol>
@@ -37,50 +38,40 @@
   </div>
 
   <!-- AR場景（預設隱藏） -->
-  <a-scene id="arScene" style="display:none;" 
-           vr-mode-ui="enabled: false" 
-           arjs="sourceType: webcam; debugUIEnabled: false;"
+  <a-scene id="arScene" style="display:none;"
+           embedded
+           arjs="sourceType: webcam; debugUIEnabled: true; videoTexture: true;"
+           vr-mode-ui="enabled: false"
            renderer="antialias: true; alpha: true">
-    
-    <!-- AR相機 -->
-    <a-camera gps-new-camera="gpsMinDistance: 2" 
-              position="0 0 0"></a-camera>
-    
-    <!-- 線索1：血跡方塊（位置：維港附近） -->
-    <a-entity id="clue1" 
-      look-at="[gps-camera]"
-              geometry="primitive: box; depth: 0.5; height: 1; width: 1" 
-              material="color: #ff4444; opacity: 0.8; transparent: true; metalness: 0.7"
-              gps-new-entity-place="latitude: 22.400126; longitude: 114.202368"
-              scale="50 50 50"
-              animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
-              sound="src: #detectiveSound; autoplay: false; volume: 0.5">
-    </a-entity>
 
-    <!-- 線索文字 -->
-    <a-text id="clueText" 
-            value="🩸 線索#1：\n發現浮屍！\n年代：1920年代\n地點：維港碼頭"
-            gps-new-entity-place="latitude: 22.400136; longitude: 114.202378"
-            align="center" color="#ff6666" 
-            scale="30 30 30"
-            look-at="[gps-camera]"
-            animation="property: components.material.material.color; from: #ff6666; to: #ff9999; dir: alternate; dur: 1500; loop: true">
-    </a-text>
+    <!-- 線索1：血跡方塊（使用 marker-based） -->
+    <a-marker preset="hiro">
+      <a-entity id="clue1"
+                geometry="primitive: box; depth: 0.5; height: 1; width: 1"
+                material="color: #ff4444; opacity: 0.8; transparent: true; metalness: 0.7"
+                scale="3 3 3"
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+                look-at="[camera]">
+      </a-entity>
 
-<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
-  <a-marker preset="hiro">
-    <a-box position="0 0.5 0" material="color: red" scale="2 2 2"></a-box>
-    <a-text value="測試成功！方塊出現了" position="0 1.5 0" align="center" color="white" scale="5 5 5"></a-text>
-  </a-marker>
-  <a-entity camera></a-entity>
-</a-scene>
+      <!-- 線索文字 -->
+      <a-text id="clueText"
+              value="🩸 線索#1：\n發現浮屍！\n年代：1920年代\n地點：維港碼頭"
+              position="0 1.5 0"
+              align="center" color="#ff6666"
+              scale="5 5 5"
+              look-at="[camera]"
+              animation="property: components.material.material.color; from: #ff6666; to: #ff9999; dir: alternate; dur: 1500; loop: true">
+      </a-text>
+    </a-marker>
+
+    <a-entity camera></a-entity>
+  </a-scene>
 
   <script>
     function startAR() {
       document.getElementById('instructions').style.display = 'none';
       document.getElementById('arScene').style.display = 'block';
-      
-      // 5秒後自動播放偵探音效
     }
 
     // 偵測到線索時觸發
@@ -92,7 +83,3 @@
   </script>
 </body>
 </html>
-
-
-
-
