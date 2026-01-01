@@ -52,7 +52,7 @@
               geometry="primitive: box; depth: 0.5; height: 1; width: 1" 
               material="color: #ff4444; opacity: 0.8; transparent: true; metalness: 0.7"
               gps-new-entity-place="latitude: 22.400126; longitude: 114.202368"
-              scale="5 5 5"
+              scale="50 50 50"
               animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
               sound="src: #detectiveSound; autoplay: false; volume: 0.5">
     </a-entity>
@@ -62,14 +62,14 @@
             value="🩸 線索#1：\n發現浮屍！\n年代：1920年代\n地點：維港碼頭"
             gps-new-entity-place="latitude: 22.400136; longitude: 114.202378"
             align="center" color="#ff6666" 
-            scale="3 3 3"
+            scale="30 30 30"
             look-at="[gps-camera]"
             animation="property: components.material.material.color; from: #ff6666; to: #ff9999; dir: alternate; dur: 1500; loop: true">
     </a-text>
 
 <a-scene id="arScene" style="display:none;" 
          vr-mode-ui="enabled: false" 
-         arjs="sourceType: webcam; debugUIEnabled: false;"
+         arjs="sourceType: webcam; debugUIEnabled: true;"
          renderer="antialias: true; alpha: true"
          loading="enabled: false">
 
@@ -90,5 +90,6 @@
   </script>
 </body>
 </html>
+
 
 
