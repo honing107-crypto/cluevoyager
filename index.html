@@ -48,9 +48,10 @@
     
     <!-- 線索1：血跡方塊（位置：維港附近） -->
     <a-entity id="clue1" 
+      look-at="[gps-camera]"
               geometry="primitive: box; depth: 0.5; height: 1; width: 1" 
               material="color: #ff4444; opacity: 0.8; transparent: true; metalness: 0.7"
-              gps-new-entity-place="latitude: 22.290000; longitude: 114.160000"
+              gps-new-entity-place="latitude: 22.400126; longitude: 114.202368"
               scale="5 5 5"
               animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
               sound="src: #detectiveSound; autoplay: false; volume: 0.5">
@@ -59,7 +60,7 @@
     <!-- 線索文字 -->
     <a-text id="clueText" 
             value="🩸 線索#1：\n發現浮屍！\n年代：1920年代\n地點：維港碼頭"
-            gps-new-entity-place="latitude: 22.290010; longitude: 114.160010"
+            gps-new-entity-place="latitude: 22.400136; longitude: 114.202378"
             align="center" color="#ff6666" 
             scale="3 3 3"
             look-at="[gps-camera]"
@@ -89,4 +90,5 @@
   </script>
 </body>
 </html>
+
 
