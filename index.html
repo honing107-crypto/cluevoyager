@@ -26,21 +26,23 @@
       <li>點擊啟動</li>
       <li>用另一台設備顯示 hiro 標記：<br>https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png</li>
       <li>對準標記，慢慢調整距離（30–50cm）</li>
-      <li>看到紅色方塊 + 線索文字 → 點擊方塊收集</li>
+      <li>看到紅色方塊 → 用手指點擊方塊收集線索</li>
     </ol>
     <button onclick="startAR()">🚨 啟動 AR 偵探模式</button>
   </div>
 
   <a-scene embedded 
            arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: true;" 
-           vr-mode-ui="enabled: false">
+           vr-mode-ui="enabled: false"
+           cursor="fuse: false; rayOrigin: mouse"
+           raycaster="objects: .clickable">
 
     <a-marker preset="hiro"
               smooth="true"
               smoothCount="10"
               smoothTolerance="0.01"
               smoothThreshold="5">
-      <a-entity id="clue1"
+      <a-entity id="clue1" class="clickable"
                 position="0 0.5 0"
                 geometry="primitive: box; depth: 0.5; height: 1; width: 1"
                 material="color: #ff4444; opacity: 0.8; transparent: true; metalness: 0.7"
@@ -63,6 +65,7 @@
       document.getElementById('instructions').style.display = 'none';
     }
 
+    // 點擊方塊事件
     document.querySelector('#clue1').addEventListener('click', function() {
       alert('🎉 線索收集成功！\n\n維港浮屍案進度：33%\n\n下一步：前往廟街調查黃金失竊案');
     });
