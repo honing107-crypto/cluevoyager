@@ -1,68 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ClueVoyager - 維港浮屍案</title>
+  <title>ClueVoyager - AR 偵探原型</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- AR.js + A-Frame 核心庫 -->
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.7/aframe/build/aframe-ar.js"></script>
   <style>
-    body { margin: 0; font-family: Arial; background: #000; color: #fff; overflow: hidden; }
+    body { margin: 0; overflow: hidden; }
     #instructions { 
       position: absolute; top: 20px; left: 20px; z-index: 100; 
-      background: rgba(0,0,0,0.8); padding: 20px; border-radius: 10px; max-width: 300px;
+      background: rgba(0,0,0,0.7); color: white; padding: 20px; border-radius: 10px; 
+      max-width: 320px; font-family: Arial;
     }
-    .glow { text-shadow: 0 0 20px #ff4444; color: #ff6666; }
     button { 
-      background: linear-gradient(45deg, #ff4444, #cc0000); 
-      border: none; color: white; padding: 15px 30px; 
+      background: #ff4444; color: white; border: none; padding: 15px 30px; 
       font-size: 18px; border-radius: 50px; cursor: pointer;
-      box-shadow: 0 5px 15px rgba(255,68,68,0.4);
     }
-    button:hover { transform: scale(1.05); }
   </style>
 </head>
 <body>
-  <!-- 操作說明 -->
   <div id="instructions">
-    <h2>🔍 ClueVoyager</h2>
-    <p><strong>維港浮屍案 - 線索#1</strong></p>
+    <h2>🔍 ClueVoyager AR 原型</h2>
+    <p>維港浮屍案 - 線索#1</p>
     <ol>
-      <li>點擊「啟動AR偵探模式」</li>
-      <li>用另一台手機/電腦顯示這個圖片：https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png</li>
-      <li>用本手機相機對準 hiro 標記</li>
-      <li>慢慢轉動手機，找到紅色方塊</li>
-      <li>點擊「收集線索」</li>
+      <li>點擊啟動</li>
+      <li>用另一台設備顯示 hiro 標記：<br>https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png</li>
+      <li>對準標記，慢慢調整距離（30–50cm）</li>
+      <li>看到紅色方塊 + 線索文字 → 點擊方塊收集</li>
     </ol>
-    <button onclick="startAR()">🚨 啟動AR偵探模式</button>
+    <button onclick="startAR()">🚨 啟動 AR 偵探模式</button>
   </div>
 
-  <!-- AR場景（預設隱藏） -->
-  <a-scene id="arScene" style="display:none;"
-           embedded
-           arjs="sourceType: webcam; debugUIEnabled: true; videoTexture: true;"
-           vr-mode-ui="enabled: false"
-           renderer="antialias: true; alpha: true">
+  <a-scene embedded 
+           arjs="sourceType: webcam; debugUIEnabled: true;" 
+           vr-mode-ui="enabled: false">
 
-    <!-- 線索1：血跡方塊（使用 marker-based） -->
     <a-marker preset="hiro">
-      <a-entity id="clue1"
-                geometry="primitive: box; depth: 0.5; height: 1; width: 1"
-                material="color: #ff4444; opacity: 0.8; transparent: true; metalness: 0.7"
-                scale="3 3 3"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
-                look-at="[camera]">
-      </a-entity>
-
-      <!-- 線索文字 -->
-      <a-text id="clueText"
-              value="🩸 線索#1：\n發現浮屍！\n年代：1920年代\n地點：維港碼頭"
-              position="0 1.5 0"
-              align="center" color="#ff6666"
-              scale="5 5 5"
-              look-at="[camera]"
-              animation="property: components.material.material.color; from: #ff6666; to: #ff9999; dir: alternate; dur: 1500; loop: true">
-      </a-text>
+      <a-box position="0 0.5 0" material="color: red" scale="2 2 2"></a-box>
+      <a-text value="🩸 線索#1：發現浮屍！\n1920年代 維港碼頭" 
+              position="0 1.5 0" 
+              align="center" 
+              color="white" 
+              scale="4 4 4"></a-text>
     </a-marker>
 
     <a-entity camera></a-entity>
@@ -71,14 +50,10 @@
   <script>
     function startAR() {
       document.getElementById('instructions').style.display = 'none';
-      document.getElementById('arScene').style.display = 'block';
     }
 
-    // 偵測到線索時觸發
-    document.querySelector('#clue1').addEventListener('click', function() {
-      alert('🎉 線索收集成功！\n\n維港浮屍案進度：33%\n\n下一步：前往廟街調查黃金失竊案');
-      // 這裡可以跳轉到你們的Glide APP
-      // window.location.href = 'https://your-glide-app.glideapp.io';
+    document.querySelector('a-box').addEventListener('click', function() {
+      alert('🎉 線索收集成功！\n\n維港浮屍案進度：33%\n\n下一步：廟街黃金失竊案');
     });
   </script>
 </body>
