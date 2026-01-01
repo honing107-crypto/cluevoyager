@@ -67,11 +67,13 @@
             animation="property: components.material.material.color; from: #ff6666; to: #ff9999; dir: alternate; dur: 1500; loop: true">
     </a-text>
 
-<a-scene id="arScene" style="display:none;" 
-         vr-mode-ui="enabled: false" 
-         arjs="sourceType: webcam; debugUIEnabled: true;"
-         renderer="antialias: true; alpha: true"
-         loading="enabled: false">
+<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
+  <a-marker preset="hiro">
+    <a-box position="0 0.5 0" material="color: red" scale="2 2 2"></a-box>
+    <a-text value="測試成功！方塊出現了" position="0 1.5 0" align="center" color="white" scale="5 5 5"></a-text>
+  </a-marker>
+  <a-entity camera></a-entity>
+</a-scene>
 
   <script>
     function startAR() {
@@ -90,6 +92,7 @@
   </script>
 </body>
 </html>
+
 
 
 
