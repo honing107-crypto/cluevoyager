@@ -1,74 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-  <title>ClueVoyager - AR 偵探原型</title>
+  <meta charset="UTF-8">
+  <title>ClueVoyager - 馬鞍山礦山魅影（5 地點 AR 測試）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.7/aframe/build/aframe-ar.js"></script>
   <style>
-    body { margin: 0; overflow: hidden; }
+    body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; }
     #instructions { 
-      position: absolute; top: 20px; left: 20px; z-index: 100; 
-      background: rgba(0,0,0,0.7); color: white; padding: 20px; border-radius: 10px; 
-      max-width: 320px; font-family: Arial;
+      position: absolute; top: 10px; left: 10px; z-index: 100; 
+      background: rgba(0,0,0,0.8); color: white; padding: 15px; border-radius: 10px; 
+      max-width: 90%; font-size: 16px;
     }
-    button { 
-      background: #ff4444; color: white; border: none; padding: 15px 30px; 
-      font-size: 18px; border-radius: 50px; cursor: pointer;
-    }
+    button { background: #c62828; color: white; border: none; padding: 12px 24px; font-size: 18px; border-radius: 50px; cursor: pointer; }
   </style>
 </head>
 <body>
   <div id="instructions">
-    <h2>🔍 ClueVoyager AR 原型</h2>
-    <p>維港浮屍案 - 線索#1</p>
-    <ol>
-      <li>點擊啟動</li>
-      <li>用另一台設備顯示 hiro 標記：<br>https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png</li>
-      <li>對準標記，慢慢調整距離（30–50cm）</li>
-      <li>看到紅色方塊 → 用手指點擊方塊收集線索</li>
-    </ol>
-    <button onclick="startAR()">🚨 啟動 AR 偵探模式</button>
+    <h2>馬鞍山礦山魅影 - 5 地點 AR 測試</h2>
+    <p>請準備 5 個 marker 圖片，逐一掃描測試不同地點</p>
+    <p>掃描對應 marker 後會出現不同顏色方塊 + 地點名稱</p>
+    <button onclick="document.getElementById('instructions').style.display='none'">開始測試</button>
   </div>
 
-  <a-scene embedded 
-           arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: true;" 
-           vr-mode-ui="enabled: false"
-           cursor="fuse: false; rayOrigin: mouse"
-           raycaster="objects: .clickable">
+  <a-scene embedded arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;" vr-mode-ui="enabled: false">
 
-    <a-marker preset="hiro"
-              smooth="true"
-              smoothCount="10"
-              smoothTolerance="0.01"
-              smoothThreshold="5">
-      <a-entity id="clue1" class="clickable"
-                position="0 0.5 0"
-                geometry="primitive: box; depth: 0.5; height: 1; width: 1"
-                material="color: #ff4444; opacity: 0.8; transparent: true; metalness: 0.7"
-                scale="2 2 2"
-                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
-                look-at="[camera]">
-      </a-entity>
-      <a-text value="🩸 線索#1：發現浮屍！\n1920年代 維港碼頭" 
-              position="0 1.5 0" 
-              align="center" 
-              color="white" 
-              scale="4 4 4"></a-text>
+    <!-- 地點1：鞍駿街休憩花園 -->
+    <a-marker type="pattern" url="https://honing107-crypto.github.io/cluevoyager/marker-01-miningcart.patt">
+      <a-box position="0 0.5 0" material="color: #c62828" scale="2 2 2"></a-box>
+      <a-text value="地點1：鞍駿街\n線索：泛黃素描" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
+    </a-marker>
+
+    <!-- 地點2：馬鞍山公園 -->
+    <a-marker type="pattern" url="https://honing107-crypto.github.io/cluevoyager/marker-02-mine-entrance.patt">
+      <a-box position="0 0.5 0" material="color: #8d6e63" scale="2 2 2"></a-box>
+      <a-text value="地點2：馬鞍山公園\n線索：紅色礦洞地圖" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
+    </a-marker>
+
+    <!-- 地點3：礦場遺址 -->
+    <a-marker type="pattern" url="https://honing107-crypto.github.io/cluevoyager/marker-03-miner-hat.patt">
+      <a-box position="0 0.5 0" material="color: #ff9800" scale="2 2 2"></a-box>
+      <a-text value="地點3：紅色礦洞\n線索：礦工口述錄音" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
+    </a-marker>
+
+    <!-- 地點4：利安邨 -->
+    <a-marker type="pattern" url="https://honing107-crypto.github.io/cluevoyager/marker-04-suspects.patt">
+      <a-box position="0 0.5 0" material="color: #673ab7" scale="2 2 2"></a-box>
+      <a-text value="地點4：利安邨\n線索：嫌疑人動機" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
+    </a-marker>
+
+    <!-- 地點5：訪客中心 -->
+    <a-marker type="pattern" url="https://honing107-crypto.github.io/cluevoyager/marker-05-list.patt">
+      <a-box position="0 0.5 0" material="color: #4caf50" scale="2 2 2"></a-box>
+      <a-text value="地點5：訪客中心\n真相解鎖！" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
     </a-marker>
 
     <a-entity camera></a-entity>
   </a-scene>
-
-  <script>
-    function startAR() {
-      document.getElementById('instructions').style.display = 'none';
-    }
-
-    // 點擊方塊事件
-    document.querySelector('#clue1').addEventListener('click', function() {
-      alert('🎉 線索收集成功！\n\n維港浮屍案進度：33%\n\n下一步：前往廟街調查黃金失竊案');
-    });
-  </script>
 </body>
 </html>
