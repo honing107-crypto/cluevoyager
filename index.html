@@ -20,43 +20,84 @@
   <div id="instructions">
     <h2>馬鞍山礦山魅影 - 5 地點 AR 測試</h2>
     <p>請準備 5 個 marker 圖片，逐一掃描測試不同地點</p>
-    <p>掃描對應 marker 後會出現不同顏色方塊 + 地點名稱</p>
+    <p>掃描對應 marker 後會出現方塊 → 點擊方塊獲得道具 & 推進劇情</p>
     <button onclick="document.getElementById('instructions').style.display='none'">開始測試</button>
   </div>
 
-  <a-scene embedded arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;" vr-mode-ui="enabled: false">
+  <a-scene embedded 
+           arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;" 
+           vr-mode-ui="enabled: false"
+           cursor="fuse: false; rayOrigin: mouse"
+           raycaster="objects: .clickable">
 
     <!-- 地點1：鞍駿街休憩花園 -->
     <a-marker type="pattern" url="https://honing107-crypto.github.io/cluevoyager/marker-01-miningcart.patt">
-      <a-box position="0 0.5 0" material="color: #c62828" scale="2 2 2"></a-box>
-      <a-text value="地點1：鞍駿街\n線索：泛黃素描" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
+      <a-box id="clue1" class="clickable" position="0 0.5 0" material="color: #c62828" scale="2 2 2"></a-box>
+      <a-text value="地點1：鞍駿街\n點擊收集線索" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
     </a-marker>
 
     <!-- 地點2：馬鞍山公園 -->
     <a-marker type="pattern" url="https://honing107-crypto.github.io/cluevoyager/marker-02-mine-entrance.patt">
-      <a-box position="0 0.5 0" material="color: #8d6e63" scale="2 2 2"></a-box>
-      <a-text value="地點2：馬鞍山公園\n線索：紅色礦洞地圖" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
+      <a-box id="clue2" class="clickable" position="0 0.5 0" material="color: #8d6e63" scale="2 2 2"></a-box>
+      <a-text value="地點2：馬鞍山公園\n點擊收集線索" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
     </a-marker>
 
     <!-- 地點3：礦場遺址 -->
     <a-marker type="pattern" url="https://honing107-crypto.github.io/cluevoyager/marker-03-miner-hat.patt">
-      <a-box position="0 0.5 0" material="color: #ff9800" scale="2 2 2"></a-box>
-      <a-text value="地點3：紅色礦洞\n線索：礦工口述錄音" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
+      <a-box id="clue3" class="clickable" position="0 0.5 0" material="color: #ff9800" scale="2 2 2"></a-box>
+      <a-text value="地點3：紅色礦洞\n點擊收集線索" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
     </a-marker>
 
     <!-- 地點4：利安邨 -->
     <a-marker type="pattern" url="https://honing107-crypto.github.io/cluevoyager/marker-04-suspects.patt">
-      <a-box position="0 0.5 0" material="color: #673ab7" scale="2 2 2"></a-box>
-      <a-text value="地點4：利安邨\n線索：嫌疑人動機" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
+      <a-box id="clue4" class="clickable" position="0 0.5 0" material="color: #673ab7" scale="2 2 2"></a-box>
+      <a-text value="地點4：利安邨\n點擊收集線索" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
     </a-marker>
 
     <!-- 地點5：訪客中心 -->
     <a-marker type="pattern" url="https://honing107-crypto.github.io/cluevoyager/marker-05-list.patt">
-      <a-box position="0 0.5 0" material="color: #4caf50" scale="2 2 2"></a-box>
-      <a-text value="地點5：訪客中心\n真相解鎖！" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
+      <a-box id="clue5" class="clickable" position="0 0.5 0" material="color: #4caf50" scale="2 2 2"></a-box>
+      <a-text value="地點5：訪客中心\n點擊解鎖真相" position="0 1.5 0" color="white" align="center" scale="3 3 3"></a-text>
     </a-marker>
 
     <a-entity camera></a-entity>
   </a-scene>
+
+  <script>
+    // 點擊事件：每個地點不同劇情 & 道具
+    const clues = {
+      clue1: {
+        title: "鞍駿街休憩花園",
+        message: "🎉 獲得道具：泛黃素描紙！\n\n劇情推進：阿晴委託你調查恐嚇事件。她相信這與爺爺遺失的「義人名单」有關。\n\n下一步：前往馬鞍山公園，解讀詩句「記憶始於源頭」。",
+      },
+      clue2: {
+        title: "馬鞍山公園",
+        message: "🎉 獲得道具：舊礦坑位置圖！\n\n劇情推進：你拼湊舊地圖碎片，發現「紅色礦洞」的位置。\n\n下一步：前往紅色礦洞附近，尋找守護靈留下的第二條線索。",
+      },
+      clue3: {
+        title: "紅色礦洞附近",
+        message: "🎉 獲得道具：生鏽的鐵礦石 + 礦工口述錄音！\n\n劇情推進：聽到礦工口述：「爆炸那天，阿傑把我推開…他自己沒出來…」\n\n下一步：前往利安邨，訪談老居民鎖定嫌疑人。",
+      },
+      clue4: {
+        title: "利安邨",
+        message: "🎉 獲得道具：嫌疑人動機筆記！\n\n劇情推進：三位嫌疑人浮現：強叔、陳伯、神秘青年。陳伯暗示名單可能被「不想往事被挖出來的人」拿走。\n\n下一步：前往訪客中心整合證據。",
+      },
+      clue5: {
+        title: "訪客中心",
+        message: "🎉 獲得成就：馬鞍山守護者徽章！\n\n劇情結局：真兇是陳伯，他為了保護哥哥犧牲而恐嚇發展商。名單交還社區，發展商同意設立紀念碑。\n\n案件完成！",
+      }
+    };
+
+    // 為每個方塊綁定點擊事件
+    Object.keys(clues).forEach(id => {
+      const element = document.querySelector(`#${id}`);
+      if (element) {
+        element.addEventListener('click', function() {
+          const data = clues[id];
+          alert(`【${data.title}】\n\n${data.message}`);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
